@@ -34,9 +34,9 @@
         }
     </style>
     <div class="container" id="registrationPage">
-        {{-- <div class="" :class="message ? 'alert alert-success': ''">
+        <div class="" :class="message ? 'alert alert-success' : ''">
             @{{ message }}
-        </div> --}}
+        </div>
         <div class="d-flex justify-content-center">
             <form class="p-5 col-6 rounded" id="formReg" @submit.prevent="Reg">
                 <h2 class="mb-4">Регистрация</h2>
@@ -119,13 +119,13 @@
                         this.errors = await response.json();
                         setTimeout(() => {
                             this.errors = [];
-                        }, 10000);
+                        }, 1000);
                     }
                     if (response.status == 200) {
                         this.message = await response.json();
                         setTimeout(() => {
-                            this.message = [];
-                        }, 10000);
+                            this.message = '';
+                        }, 1000);
                         form.reset();
                         let favorite_choose = document.getElementById('block_choose_favorite');
                         favorite_choose.classList.remove('d-none');
@@ -135,13 +135,13 @@
                 async sendFavGenres() {
                     let genreBtns = document.querySelectorAll('.genre-btn');
                     let genres = [];
-                        genreBtns.forEach(function(btn) {
-                            if (btn.classList.contains('active_genre')) {
-                                genres.push(btn.getAttribute(
+                    genreBtns.forEach(function(btn) {
+                        if (btn.classList.contains('active_genre')) {
+                            genres.push(btn.getAttribute(
                                 'data-genre')); // Добавляем выбранный жанр в массив
-                            }
-                        });
-                        this.selectedGenres = genres;
+                        }
+                    });
+                    this.selectedGenres = genres;
                     const response = await fetch('{{ route('sendFavGenres') }}', {
                         method: 'post',
                         headers: {

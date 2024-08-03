@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Genre;
+use App\Models\Playlist;
 use App\Models\UserGenre;
+use App\Models\UserPlaylist;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -66,23 +68,25 @@ class UserGenreController extends Controller
     }
 
     //добавить любимые жанры пользователя
-    public function sendFavGenres(Request $request) {
+    public function sendFavGenres(Request $request)
+    {
         // dd($request->all());
-        foreach($request->selectedGenres as $genre) {
-          $userGenre = new UserGenre();  
-          $userGenre->user_id = Auth::id();
-          $userGenre->genre_id = $genre;
-          $userGenre->save();
+        foreach ($request->selectedGenres as $genre) {
+            $userGenre = new UserGenre();
+            $userGenre->user_id = Auth::id();
+            $userGenre->genre_id = $genre;
+            $userGenre->save();
         }
         return response()->json('Любимые жанры сохранены');
     }
 
     //получить любимые жанры пользователя
-    public function getGenres() {
+    public function getGenres()
+    {
         $genres = UserGenre::query()->where('user_id', Auth::id())->get();
-        
+
         $genres_id = [];
-        foreach($genres as $genre) {
+        foreach ($genres as $genre) {
             array_push($genres_id, $genre->genre_id);
         }
         // dd($genres_id);

@@ -465,6 +465,7 @@
                 async getUserGenres() {
                     const response = await fetch('{{ route('getGenres') }}');
                     this.genres = await response.json();
+                    console.log(this.genres);
                 },
                 async saveChange() {
                     let genreBtns = document.querySelectorAll('.genre-btn');
